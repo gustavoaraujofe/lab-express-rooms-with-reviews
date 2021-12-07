@@ -58,6 +58,7 @@ router.post("/signup", async (req, res) => {
 //Login
 
 router.post("/login", async (req, res) => {
+  console.log(req.body);
   try {
     //Extrair os dados do corpo da requisição
     const { email, password } = req.body;
@@ -78,10 +79,29 @@ router.post("/login", async (req, res) => {
     //Caso correta, cria uma sessão para esse usuário
     const token = generateToken(foundUser);
 
-    res.status(200).json(token);
+    res.status(200).json({token: token, user: {name: foundUser.name, email: foundUser.email}});
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
+  }
+});
+
+//Buscar apenas 1 usuario
+router.get("/found-user", isAuthenticated, async (req, res) => {
+  try {
+    console.log(req.user._id);
+    const { name, email } = await UserModel.findOne({ email: req.user.email });
+
+    if (!name) {
+      return res
+        .status(404)
+        .json({ message: "Acesso negado: operação não permitida" });
+    }
+
+    res.status(200).json({name: name, email: email});
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({ message: "Usuário não encontrado" });
   }
 });
 

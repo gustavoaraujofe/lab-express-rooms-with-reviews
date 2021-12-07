@@ -34,6 +34,7 @@ router.post("/room/create-review", isAuthenticated, async (req, res) => {
       comment: comment,
       roomId: roomId,
       userId: user._id,
+      userName: user.name,
     });
 
     await RoomModel.findOneAndUpdate(
@@ -78,7 +79,6 @@ router.patch("/room/edit-review/:id", isAuthenticated, async (req, res) => {
 
 router.delete("/room/delete-review/:id", isAuthenticated, async (req, res) => {
   try {
-
     //Salva o comentário e usuario em uma variavel
     const review = await ReviewModel.findOne({ _id: req.params.id });
     const user = await UserModel.findOne({ _id: req.user._id });

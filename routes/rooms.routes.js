@@ -55,6 +55,22 @@ router.get("/rooms", isAuthenticated, async (req, res) => {
   }
 });
 
+//Busca lista completa dos quartos de cada usuario(exibe apenas se estiver logado)
+router.get("/rooms-user", isAuthenticated, async (req, res) => {
+  try {
+    const rooms = await RoomsModel.find();
+
+    const roomsFiltered = rooms.filter((currentRoom) =>{
+      return currentRoom.userId === req.user._id
+    })
+
+    res.status(200).json(roomsFiltered);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 //Busca apenas um quarto(exibe apenas se o estiver logado)
 router.get("/rooms/:id", isAuthenticated, async (req, res) => {
   try {
