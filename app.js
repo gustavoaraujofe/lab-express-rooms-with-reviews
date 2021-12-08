@@ -1,4 +1,4 @@
-//Configurar dotenv
+//Configurar dotenv (gerenciador de variaveis de ambiente)
 require("dotenv").config();
 
 //Importar o express
@@ -13,7 +13,7 @@ const cors = require("cors");
 //Declarar versão da API
 const API_VERSION = 1;
 
-//Conectar ao banco de dados
+//Importar configurações do banco de dados
 const connectToDb = require("./config/db.config");
 
 //Instanciar o Express
