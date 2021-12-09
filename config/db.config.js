@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 //Definir a URI do banco de dados
-const MONGODB_URI = `mongodb://localhost:27017/test-app`;
+const MONGODB_URI = `mongodb://localhost:27017/rooms-app`;
 
 //Configurar o mongoose pra se conectar com a URI
 const connPromise = mongoose
